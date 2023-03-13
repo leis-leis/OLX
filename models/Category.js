@@ -1,7 +1,7 @@
 var mongoose = require("mongoose");
 
 var CategorySchema = mongoose.Schema({
-    Name:{type:String, required:true}
+    Name:{type:String, required:true, unique:true}
 });
 
 //ewentualna rozbudowa o subkategorie
