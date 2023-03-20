@@ -1,9 +1,10 @@
 var express = require("express");
 var mongoose = require("mongoose")
 const app = express();
-const port = 3000
+const port = 3005
 
-mongoose.connect('mongodb://localhost:27017/OLX',
+mongoose.connect('mongodb://0.0.0.0:27017/OLX',
+
   {
     useNewUrlParser: true,
     useUnifiedTopology: true
@@ -92,14 +93,14 @@ app.get("/", async (req, res) => {
       const db = mongoose.connection.db;
   
       // Get all collections
-      const collections = await db.listCollections().toArray();
+    //   const collections = await db.listCollections().toArray();
   
       // Create an array of collection names and drop each collection
-      collections
-        .map((collection) => collection.name)
-        .forEach(async (collectionName) => {
-          db.dropCollection(collectionName);
-        });
+    //   collections
+    //     .map((collection) => collection.name)
+    //     .forEach(async (collectionName) => {
+    //       db.dropCollection(collectionName);
+    //     });
         
 
         

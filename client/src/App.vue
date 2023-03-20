@@ -1,30 +1,27 @@
+<template>
+  <NavBar/>
+  <RouterView/>
+</template>
+
 <script scoped>
+import NavBar from "@/components/NavBar.vue";
 export default {
+  components: {
+    NavBar
+  },
 methods: {
     handleClick() {
-      this.$router.push('./login-page');
+      this.$router.push('/login-page');
     }
   }
 }
+
 </script>
 
-<template>
-  <header>
-    <img alt="Vue logo" class="logo" src="./assets/logo.svg" width="125" height="60" />
-    <img class="loginicon" src="./assets/pngfind.com-bite-mark-png-631239.png" width="50" height="50"/>
-    <div class="container">
-    <button @click="handleClick">TWOJE KONTO</button>
-    </div>
-  </header>
-  <h1>
-    
-  </h1>
-  <body>
-    
-  </body>
-</template>
+<style>
+</style>
 
-<style scoped>
+<!-- <style scoped>
 
 
 .logo {
@@ -82,4 +79,4 @@ h1 {
   border-radius: 5px;
   cursor: pointer;
 }
-</style>
+</style> -->

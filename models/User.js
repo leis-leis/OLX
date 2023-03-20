@@ -9,7 +9,7 @@ var UserSchema = mongoose.Schema({
     Phone:{type:String, required:true, unique:true},
     JoinDate:{type:Date, default:Date.now},
     LastOnline:{type:Date, default:Date.now}, //update przy przejsciu między stronami?
-    //Offers:[{offer:{type:mongoose.Schema.Types.ObjectId/*, unique:true*/}}],  //tablica
+    // Offers:[{offer:{type:mongoose.Schema.Types.ObjectId, unique:true}}],  //tablica
     Blocked:{type:Boolean, default:false},
     UserType:{type:mongoose.Schema.Types.ObjectId, /*required:true,*/ unique:false}
 });
