@@ -1,34 +1,31 @@
-<script>
-  import { useUserStore } from '../stores/user';
-import { mapStores } from 'pinia';
-  
-  export default {
-    
-    data(){
-      return { username: "", password: "" }
-    },
-    setup(){
-      const userStore = useUserStore()
-      return { userStore }
-    },
-    
-    methods: {
-      login(){
-        this.userStore.login(this.username, this.password)
-      }
-    }
-    
-  }
+<script setup>
+import { useUserStore } from "../stores/user";
+import {ref} from "vue";
+import router from "@/router";
+import Captcha from "../components/Captcha.vue";
+
+
+const userStore = useUserStore();
+
+const username = ref("");
+const password = ref("");
+
+const login = () => {
+  userStore.login(username.value, password.value);
+  router.push('/')
+};
 </script>
 
+
+
 <template>
-    <div>
-        <div class="row">
-            <div class="card mx-auto">
-                <div class="card-header text-white bg-primary">
-                    <h1>LOGOWANIE</h1>
-                </div>
-                <div class="card-body">
+  <div>
+    <div class="row">
+      <div class="card mx-auto p-0">
+        <div class="card-header text-white">
+          <h1>LOGOWANIE</h1>
+        </div>
+        <div class="form card-body">
           <form @submit.prevent="loginUser">
             <div class="form-group">
               <label for="username">Login</label>
@@ -39,7 +36,7 @@ import { mapStores } from 'pinia';
                 name="Login"
                 v-model="username"
                 class="form-control"
-              >
+              />
             </div>
             <div class="form-group">
               <label for="password">Hasło</label>
@@ -50,36 +47,59 @@ import { mapStores } from 'pinia';
                 name="Pass"
                 id="password"
                 v-model="password"
-              >
-            </div><br>
-            <button class="submit" >CAPTHA</button><br><br>
-            <button @click="login" type="submit">ZALOGUJ</button>>
-                        <router-link to="/login" class="card-link tor">Zapomniałeś hasła?   </router-link>
-                    </form>
-                </div>
+              />
             </div>
+            <br />
+            <Captcha />
+            <button @click="login" type="submit" class="btn btn-primary">ZALOGUJ</button>
+            <br>
+            <br>
+            <router-link to="/login" class="card-link tor"
+              >Zapomniałeś hasła?
+            </router-link>
+          </form>
         </div>
+      </div>
     </div>
-
+  </div>
 </template>
 
 <style scoped>
-    .card{
-        width: 50%;
-    }
-    .form{
-        margin-left: 520px;
-        height: auto;
-        width: 400px;
-        padding: 0px 0px 25px 0px;
-        border: 2px solid #303F9F;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        position: relative;
-        font-family: Exo;
-      }
+   .card-header{
+    background-color: #303F9F;
+}
+
+.btn-primary{
+    width: 100px;
+    background-color: #757575;
+    margin-left: 50px;
+}
+
+.mx-auto {
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+
+.card {
+    width: 50%;
+    border: 2px solid #303F9F;
+}
+
+.form {
+    height: auto;
+    width: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    font-family: Exo;
+    background-color: #C5CAE9;
+}
+
+.form-group {
+padding: 3px;
+}
 
       .buttonsy{
         display: flex;
@@ -159,16 +179,16 @@ import { mapStores } from 'pinia';
           margin: 7px 0px 7px 0px;
         }
 
-        .submit{
-          width: 175px;
-          border: none;
-          font-family:  EXO;
-          padding: 7px;
-          border-radius: 5px;
-          background-color: #BDBDBD;
-          outline: none;
-          cursor: pointer;
-        }
+        .submit {
+    width: 210px;
+    border: none;
+    font-family: EXO;
+    padding: 7px;
+    border-radius: 5px;
+    background-color: #BDBDBD;
+    outline: none;
+    cursor: pointer;
+}
 
         .form .SignUp_form{
         display: none;
@@ -190,6 +210,9 @@ import { mapStores } from 'pinia';
       }
 
       .tor{
-        float: right;
+        margin-left: 15%;
+        margin-top: 30%;
+        float: center;
       }
+      
 </style>

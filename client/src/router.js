@@ -1,36 +1,56 @@
-import { createRouter, createWebHistory } from 'vue-router'
-import HomePage from './pages/home-page.vue'
-import NewPage from './pages/login-page.vue'
-import About from './pages/About.vue'
-import Register from './pages/register.vue'
-import Login from './pages/login.vue'
+import { createRouter, createWebHistory } from "vue-router";
+import HomePage from "./pages/Home.vue";
+import About from "./pages/About.vue";
+import Register from "./pages/register.vue";
+import Login from "./pages/login.vue";
+import UserPanel from "./pages/userpanel.vue";
+import UserModify from "./pages/usermodify.vue";
+import AdminPanel from "./pages/adminpanel.vue";
+import adminpanelusers from "./pages/adminpanelusers.vue";
+import useroffer from "./pages/useroffer.vue";
 
 const routes = [
   {
-    path: '/',
-    component: HomePage
+    path: "/",
+    component: HomePage,
   },
   {
-    path: '/login-page',
-    component: NewPage
+    path: "/about",
+    component: About,
   },
   {
-    path: '/about',
-    component: About
+    path: "/register",
+    component: Register,
   },
   {
-    path: '/register',
-    component: Register
+    path: "/login",
+    component: Login,
   },
   {
-    path: '/login',
-    component: Login
+    path: "/userpanel",
+    component: UserPanel,
+  },
+  {
+    path: "/usermodify",
+    component: UserModify,
+  },
+  {
+    path: "/adminpanel",
+    component: AdminPanel,
+  },
+  {
+    path: "/adminpanelusers",
+    component: adminpanelusers,
+  },
+  {
+    path: "/useroffer",
+    component: useroffer,
   }
-]
+];
 
 const router = createRouter({
   history: createWebHistory(),
-  routes
-})
+  routes,
+});
 
-export default router
+export default router;

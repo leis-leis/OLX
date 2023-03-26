@@ -1,7 +1,9 @@
 var mongoose = require("mongoose");
 
 var CategorySchema = mongoose.Schema({
-    Name:{type:String, required:true, unique:true}
+  Name: { type: String, required: true},
+  Deleted: { type: Boolean, default: false},
+  MainCategory:{type:mongoose.Schema.Types.ObjectId, ref: "Category", default:null},  
 });
 
 //ewentualna rozbudowa o subkategorie

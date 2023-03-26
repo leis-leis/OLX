@@ -1,106 +1,169 @@
-<script>
-import { useUserStore } from '../stores/user';
-import { mapStores } from 'pinia';
-export default {
+<script setup>
+import { useUserStore } from "../stores/user";
+import {ref} from "vue";
+const userStore = useUserStore();
 
-    data() {
-        return {
-            username: "",
-            name: "",
-            surname: "",
-            email: "",
-            mobile: "",
-            password: "",
-            confirm_password: ""
-        };
-    },
-    setup() {
-        const userStore = useUserStore()
-        return { userStore }
-    },
+const username = ref("");
+const name = ref("");
+const surname = ref("");
+const email = ref("");
+const mobile = ref("");
+const password = ref("");
+const confirm_password = ref("");
 
-    methods: {
-        register() {
-            this.userStore.register(this.username, this.password, this.confirm_password, this.name, this.surname, this.email, this.mobile)
-        }
-    }
-}
+const register = () => {
+  userStore.register(
+    username.value,
+    password.value,
+    confirm_password.value,
+    name.value,
+    surname.value,
+    email.value,
+    mobile.value
+  );
+  router.push('/')
+};
 </script>
 
 <template>
-    <div>
-        <div class="row">
-            <div class="card mx-auto">
-                <div class="card-header text-white bg-primary">
-                    <h1>REJESTRACJA</h1>
-                </div>
-                <div class="card-body">
-                    <form @submit.prevent="registerUser">
-                        <div class="form-group">
-                            <label for="login">Login</label>
-                            <input id="login" type="text" placeholder="Login" name="Login" v-model="username"
-                                class="form-control">
-                        </div>
-                        <div class="form-group">
-                            <label for="password">Hasło</label>
-                            <input type="password" class="form-control" placeholder="Hasło" name="Pass" id="password"
-                                v-model="password">
-                        </div>
-                        <div class="form-group">
-                            <label for="confirm_password">Powtórz hasło</label>
-                            <input type="password" class="form-control" placeholder="Powtórz hasło" name="PassConfirm"
-                                id="confirm_password" v-model="confirm_password">
-                        </div>
-                        <div class="form-group">
-                            <label for="name">Imię</label>
-                            <input id="name" type="text" placeholder="Imię" name="Name" v-model="name" class="form-control">
-                        </div>
-                        <div class="form-group">
-                            <label for="surname">Nazwisko</label>
-                            <input id="surname" type="text" placeholder="Nazwisko" name="Surname" v-model="surname"
-                                class="form-control">
-                        </div>
-                        <div class="form-group">
-                            <label for="email">Email</label>
-                            <input id="email" type="text" placeholder="Email" name="Email" v-model="email"
-                                class="form-control">
-                        </div>
-                        <div class="form-group">
-                            <label for="phone">Numer telefonu</label>
-                            <input id="phone" type="text" placeholder="Numer telefonu" name="Phone" v-model="mobile"
-                                class="form-control">
-                        </div>
-                        <br>
-                        <button class="submit">CAPTHA</button><br><br>
-                        <button class="btn btn-primary" @click="register">ZAREJESTRUJ</button>
-                        &nbsp;&nbsp;&nbsp;&nbsp;
-                        <router-link to="/login" class="card-link tor">Masz już konto?</router-link>
-                    </form>
-                </div>
-            </div>
+  <div>
+    <div class="row">
+      <div class="card mx-auto p-0">
+        <div class="card-header text-white">
+          <h1>REJESTRACJA</h1>
         </div>
+        <div class="form card-body">
+          <form @submit.prevent="registerUser">
+            <div class="form-group">
+              <label for="login">Login</label>
+              <input
+                id="login"
+                type="text"
+                placeholder="Login"
+                name="Login"
+                v-model="username"
+                class="form-control"
+              />
+            </div>
+            <div class="form-group">
+              <label for="password">Hasło</label>
+              <input
+                type="password"
+                class="form-control"
+                placeholder="Hasło"
+                name="Pass"
+                id="password"
+                v-model="password"
+              />
+            </div>
+            <div class="form-group">
+              <label for="confirm_password">Powtórz hasło</label>
+              <input
+                type="password"
+                class="form-control"
+                placeholder="Powtórz hasło"
+                name="PassConfirm"
+                id="confirm_password"
+                v-model="confirm_password"
+              />
+            </div>
+            <div class="form-group">
+              <label for="name">Imię</label>
+              <input
+                id="name"
+                type="text"
+                placeholder="Imię"
+                name="Name"
+                v-model="name"
+                class="form-control"
+              />
+            </div>
+            <div class="form-group">
+              <label for="surname">Nazwisko</label>
+              <input
+                id="surname"
+                type="text"
+                placeholder="Nazwisko"
+                name="Surname"
+                v-model="surname"
+                class="form-control"
+              />
+            </div>
+            <div class="form-group">
+              <label for="email">Email</label>
+              <input
+                id="email"
+                type="text"
+                placeholder="Email"
+                name="Email"
+                v-model="email"
+                class="form-control"
+              />
+            </div>
+            <div class="form-group">
+              <label for="phone">Numer telefonu</label>
+              <input
+                id="phone"
+                type="text"
+                placeholder="Numer telefonu"
+                name="Phone"
+                v-model="mobile"
+                class="form-control"
+              />
+            </div>
+            <br />
+            <button class="submit">CAPTHA</button><br /><br />
+            <button class="btn btn-primary" @click="register">
+              ZAREJESTRUJ
+            </button>
+            &nbsp;&nbsp;&nbsp;&nbsp;
+            <br>
+            <br>
+            <router-link to="/login" class="card-link tor"
+              >Masz już konto?</router-link
+            >
+          </form>
+        </div>
+      </div>
     </div>
+  </div>
 </template>
 
-
-
 <style scoped>
+
+.card-header{
+    background-color: #303F9F;
+}
+
+.btn-primary{
+    background-color: #757575;
+    margin-left: 40px;
+}
+
+.mx-auto {
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+
 .card {
     width: 50%;
+    border: 2px solid #303F9F;
 }
 
 .form {
-    margin-left: 520px;
     height: auto;
-    width: 400px;
-    padding: 0px 0px 25px 0px;
-    border: 2px solid #303F9F;
+    width: auto;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     position: relative;
     font-family: Exo;
+    background-color: #C5CAE9;
+}
+
+.form-group {
+padding: 3px;
 }
 
 .buttonsy {
@@ -118,7 +181,7 @@ export default {
     justify-content: center;
     align-items: center;
     font-size: 16px;
-    width: 100%;
+    width: 220px;
     cursor: pointer;
 }
 
@@ -185,7 +248,7 @@ export default {
 }
 
 .submit {
-    width: 175px;
+    width: 210px;
     border: none;
     font-family: EXO;
     padding: 7px;
@@ -213,8 +276,14 @@ export default {
     width: 30px;
     height: 30px;
 }
+.tor{
+        margin-left: 20%;
+        margin-top: 15%;
+        float: center;
+      }
 
-.tor {
-    float: right;
+.row {
+    background: #C5CAE9;
 }
+    
 </style>

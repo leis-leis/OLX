@@ -1,12 +1,7 @@
-<script>
-
-
-</script>
+<script></script>
 
 <template>
-    <h1>Aktunio by Bilon and Krzychu</h1>
+  <h1>Aktunio by Bilon and Krzychu</h1>
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>
