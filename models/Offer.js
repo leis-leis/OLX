@@ -1,7 +1,7 @@
 var mongoose = require("mongoose");
 
 var OfferSchema = mongoose.Schema({
-  Name: { type: String, required: true, unique: true },
+  Name: { type: String, required: true},
   Price: { type: String, required: true },
   Description: { type: String, required: false },
   Date: { type: Date, default: Date.now },

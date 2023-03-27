@@ -50,8 +50,12 @@ router.post(
         })
 
         const saved = await newOffer.save();
-     
+        
+        return res.json({
+          msg:"Oferta dodana"
+        })
     }
+    
 );
 
 router.get(
@@ -120,5 +124,19 @@ router.post(
     });
   }
 );
+
+router.post(
+  "/offerdelete",
+  passport.authenticate("jwt", {
+    session: false,
+  }),
+  async (req, res) => {
+    const deleteOffer = await Offer.deleteOne({ _id: req.body.Id})
+
+    res.json({
+      msg: "Oferta usunięta"
+    })
+  }
+)
 
 module.exports = router;
