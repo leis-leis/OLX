@@ -36,24 +36,110 @@ onMounted(async () => {
   </div>
 </div>
 <h1>TWOJE OGŁOSZENIA</h1>
-
-<div v-for="offer in offers">
+<div class="button-container">
+<div class="buttonik">
+  Dodaj ogłoszenie <i class="fa fa-plus fa-1x"></i>
+</div>
+<div class="buttonik">
+  Usuń ogłoszenie <i class="fa fa-minus fa-1x"></i>
+</div>
+<div class="buttonik">
+  Edytuj ogłoszenie <i class="fa fa-pencil fa-1x"></i>
+</div>
+</div>
+<div class="panel">
+<div class="panelelements" v-for="offer in offers">
+  <div>
+  <img class="foto" :src="'/src/assets/uploads/'+ offer.Photos[0]" alt="zdjecie">
+  </div>
+  <div>
     <h3>{{ offer.Name }}</h3>
-    <h5>{{ offer.Price }}</h5>
-    <p>{{ offer.Description }}</p>
-    <div v-for="image in offer.Photos">
-    <img :src="'/src/assets/uploads/'+ image" alt="zdjecie">
-    </div>
+    <p class="p">{{ offer.Description }}</p>
+  </div>
+  <div>
+    <p class="cena">{{ offer.Price }}</p>
+  </div>
+    
+</div>
 </div>
 
 </template>
 
 <style scoped>
 
+.button-container {
+    display: relative;
+    justify-content: space-evenly;
+  }
+
 h1 {
-padding: 50px;
+padding: 20px;
 text-align: center;
 font-family: Exo;
+}
+
+h3 {
+float: center;
+display: flex;
+text-align: center;
+font-family: Exo;
+color: #fff;
+}
+
+.cena {
+margin-left: auto;
+background-color: #BDBDBD;
+display: flex;
+padding: 10px;
+text-align: center;
+font-family: Exo;
+font-size: 36px;
+}
+
+.buttonik {
+    text-align: center;
+    padding: auto;
+    background-color: #3F51B5;
+    color: #fff;
+    float: right;
+    font-size: 24px;
+    width: 250px;
+    height: 40px;
+    cursor: pointer;
+    font-family: Exo;
+}
+
+.buttonik:hover {
+    background-color: #FF5722;
+  }
+
+.panel {
+    margin: auto;
+    display: relative;
+    margin-top: 30px;
+    width: 90%;
+    height: 200px;
+    background-color: #3F51B5;
+  }
+
+.panelelements {
+    width: inherit;
+    height: inherit;
+    justify-content: space-between;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+}
+
+.foto {
+    padding: 10px;
+    height: 200px;
+    width: 200px;
+}
+
+.p {
+    color: #fff;
+    font-family: Exo;
 }
 
 

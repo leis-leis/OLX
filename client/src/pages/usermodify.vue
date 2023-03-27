@@ -114,7 +114,7 @@ import Dropfile from "@/components/Dropfile.vue";
             <div class="form-group">
               <label for="password">Potwierdź Hasło</label>
               <input
-                type="confirm_password"
+                type="password"
                 class="form-control"
                 placeholder="Potwierdź Hasło"
                 name="confirm_pass"
