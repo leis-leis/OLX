@@ -3,6 +3,7 @@ import axios from "axios";
 import { onMounted, ref } from "vue";
 import { useUserStore } from "../stores/user";
 import { useFileStore } from "../stores/files";
+import Time from "@/components/Time.vue";
 
 const fileStore = useFileStore();
 const userStore = useUserStore();
@@ -28,17 +29,19 @@ onMounted(async () => {
   });
   categories.value = res.data.categories;
   //console.log(categories.value);
-  mainCategory.value = categories.value.filter(c => c.MainCategory == null);
-  mainCategory.value.forEach(c => {
-    c.SubCategory = categories.value.filter(cc => cc.MainCategory === c._id)
+  mainCategory.value = categories.value.filter((c) => c.MainCategory == null);
+  mainCategory.value.forEach((c) => {
+    c.SubCategory = categories.value.filter((cc) => cc.MainCategory === c._id);
     //console.log(c.SubCategory)
-  })
+  });
 });
 
 const handleHange = (event) => {
-  subCategory.value = mainCategory.value.find(c => c._id === event.target.value).SubCategory
-  console.log(subCategory.value)
-}
+  subCategory.value = mainCategory.value.find(
+    (c) => c._id === event.target.value
+  ).SubCategory;
+  console.log(subCategory.value);
+};
 
 function onpost() {
   const files = fileStore.files;
@@ -87,13 +90,14 @@ export default {
     data-bs-toggle="offcanvas"
     data-bs-target="#offcanvasScrolling"
     aria-controls="offcanvasScrolling"
+    style="float: right"
   >
     <i class="fa fa-bars"></i>
   </button>
 
   <div
-    class="offcanvas offcanvas-start"
-    style="background-color: #3f51b5; color: #fff; width: 200px"
+    class="offcanvas offcanvas-end"
+    style="background-color: #3f51b5; color: #fff; width: 20vh"
     data-bs-scroll="true"
     data-bs-backdrop="false"
     tabindex="-1"
@@ -102,8 +106,9 @@ export default {
   >
     <div class="offcanvas-header">
       <h5 class="offcanvas-title" id="offcanvasScrollingLabel">
-        Sidebar panel
+        {{ email }}
       </h5>
+      <Time />
       <button
         type="button"
         class="btn-close"
@@ -137,6 +142,7 @@ export default {
           <input
             id="name"
             type="text"
+            enterkeyhint="next"
             placeholder="np. Smartfon Iphone 11 na gwarancji"
             name="Name"
             v-model="nameOffer"
@@ -147,8 +153,9 @@ export default {
         <div class="form-group">
           <input
             id="name"
-            type="text"
+            type="number"
             placeholder="CENA"
+            enterkeyhint="next"
             name="Name"
             v-model="priceOffer"
             class="form-control"
@@ -162,13 +169,12 @@ export default {
       <div>
         Kategoria
         <select @change="handleHange($event)" name="mainCat" id="mainCategory">
-          <option  v-for="cat in mainCategory" :key="cat._id" :value="cat._id">
+          <option v-for="cat in mainCategory" :key="cat._id" :value="cat._id">
             {{ cat.Name }}
           </option>
         </select>
         <select name="subCat" id="subCategory" v-model="SubCatID">
-          <option value="-1">Kategorię główną</option>
-          <option  v-for="cat in subCategory" :key="cat._id" :value="cat._id">
+          <option v-for="cat in subCategory" :key="cat._id" :value="cat._id">
             {{ cat.Name }}
           </option>
         </select>
@@ -199,9 +205,11 @@ export default {
       <input
         id="name"
         type="text"
+        autocomplete="address-level2"
+        enterkeyhint="next"
         placeholder="Miejscowość"
-        name="Name"
-        v-model="name"
+        name="address-level2"
+        v-model="address"
         class="form-control"
         style="margin-left: 10px"
       />
@@ -215,10 +223,11 @@ export default {
         <div class="form-group">
           <input
             id="name"
-            type="text"
+            type="email"
+            enterkeyhint="next"
             placeholder="Adres E-mail"
-            name="Name"
-            v-model="name"
+            name="email"
+            v-model="email"
             class="form-control"
           />
         </div>
@@ -226,10 +235,12 @@ export default {
         <div class="form-group">
           <input
             id="name"
-            type="text"
-            placeholder="Numer Telefonu"
-            name="Name"
-            v-model="name"
+            type="tel"
+            enterkeyhint="next"
+            pattern="[0-9]{3}-[0-9]{3}-[0-9]{3}"
+            placeholder="Nr telefonu"
+            name="tel"
+            v-model="tel"
             class="form-control"
           />
         </div>

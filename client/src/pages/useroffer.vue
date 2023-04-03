@@ -2,6 +2,7 @@
 import axios from "axios";
 import { onMounted } from "vue";
 import { ref } from "vue";
+import Time from "@/components/Time.vue";
 
 
 const offers = ref("");
@@ -28,15 +29,20 @@ onMounted(async () => {
 </script>
 
 <template>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
   <button class="btn-primar" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasScrolling"
-    aria-controls="offcanvasScrolling"><i class="fa fa-bars"></i></button>
+    aria-controls="offcanvasScrolling" style="float: right;">
+    <i class="fa fa-bars"></i>
+  </button>
 
-  <div class="offcanvas offcanvas-start" style="background-color: #3F51B5; color:#fff; width: 200px;"
+  <div class="offcanvas offcanvas-end" style="background-color: #3f51b5; color: #fff; width: 20vh;"
     data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1" id="offcanvasScrolling"
     aria-labelledby="offcanvasScrollingLabel">
     <div class="offcanvas-header">
-      <h5 class="offcanvas-title" id="offcanvasScrollingLabel">Sidebar panel</h5>
+            <h5 class="offcanvas-title" id="offcanvasScrollingLabel" >
+        {{ email }}
+      </h5>
+      <Time/>
       <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
     </div>
     <div class="offcanvas-body">

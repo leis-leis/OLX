@@ -168,7 +168,7 @@ router.get(
   async (req, res) => {
     const offers = await Offer.find({
       
-    })//.skip(0).limit(5)  //wyswietlanie x ogloszen, zeby nie wyswietlac miliona na raz tylko po kilka do implementacji
+    }).sort({Date: 'desc'})//.skip(0).limit(5)  //wyswietlanie x ogloszen, zeby nie wyswietlac miliona na raz tylko po kilka do implementacji
 
     return res.json({
        offers: offers,

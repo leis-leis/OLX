@@ -4,6 +4,7 @@ import axios from "axios";
 import { onMounted } from "vue";
 import { ref } from "vue";
 import { useUserStore } from "../stores/user";
+import Time from "@/components/Time.vue";
 
 const userStore = useUserStore();
 
@@ -73,17 +74,18 @@ function del() {
 <template>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
   <button class="btn-primar" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasScrolling"
-    aria-controls="offcanvasScrolling">
+    aria-controls="offcanvasScrolling" style="float: right;">
     <i class="fa fa-bars"></i>
   </button>
 
-  <div class="offcanvas offcanvas-start" style="background-color: #3f51b5; color: #fff; width: 200px"
+  <div class="offcanvas offcanvas-end" style="background-color: #3f51b5; color: #fff; width: 20vh;"
     data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1" id="offcanvasScrolling"
     aria-labelledby="offcanvasScrollingLabel">
     <div class="offcanvas-header">
-      <h5 class="offcanvas-title" id="offcanvasScrollingLabel">
-        Sidebar panel
+            <h5 class="offcanvas-title" id="offcanvasScrollingLabel" >
+        {{ email }}
       </h5>
+      <Time/>
       <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
     </div>
     <div style="display: flex; flex-direction: column" class="offcanvas-body">
@@ -93,8 +95,8 @@ function del() {
   </div>
   <div class="row">
     <div class="card mx-auto p-0" style="height: 475px">
-      <div class="card-header text-white">
-        <h1>Admin Panel</h1>
+      <div class="card-header text-white" style="align-content: center;">
+        <h1 style="height: fit-content; width: fit-content; margin: auto;">Admin Panel</h1>
       </div>
       <div class="kategorieadd">
         Dodaj Kategorie
@@ -103,7 +105,7 @@ function del() {
       <div class="podkategorieadd">
         Wybierz kategorię
         <select v-model="mainCat" name="SubcategoryTo" id="category">
-          <option value="-1">Jest kategorią główną</option>
+          <option value="0">Jest kategorią główną</option>
           <template v-for="category in categories">
             <option v-if="category.MainCategory == null" :value="category._id">
               {{ category.Name }}

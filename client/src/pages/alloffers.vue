@@ -16,6 +16,7 @@ onMounted(async () => {
         },
     });
     offers.value = res.data.offers
+    
 });
 
 </script>
@@ -45,8 +46,7 @@ onMounted(async () => {
   <h1>WSZYSTKIE OGŁOSZENIA</h1>
   <div class="button-container">
   </div>
-  <div class="panel" v-for="offer in offers">
-    <router-link :to="{name: `offer`, params: {id: offer._id }}">
+    <router-link class="panel" v-for="offer in offers" :to="{name: `offer`, params: {id: offer._id }}">
     <div class="panelelements">
       <div>
         <img class="foto" :src="'/src/assets/uploads/' + offer.Photos[0]" alt="zdjecie">
@@ -60,7 +60,7 @@ onMounted(async () => {
       </div>
       </div>
     </router-link>
-    </div>
+
     
 </template>
 
