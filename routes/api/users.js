@@ -158,22 +158,25 @@ router.post(
     }
     const hash = await bcrypt.hash(req.body.Password, 10);
     const filter = { _id: req.user._id };
-
-    let photo;
+    
+    var update
     if (req.file?.path == undefined) {
-      photo = "default.png";
+      update = {
+        Name: req.body.Name,
+        Surname: req.body.Surname,
+        Pass: hash,
+      };
     } else {
-      console.log(req.file)
-      photo = fileName;
+      var photo = fileName;
+      update = {
+        Name: req.body.Name,
+        Surname: req.body.Surname,
+        Pass: hash,
+        Avatar: photo,
+      };
+      
     }
-
-    const update = {
-      Name: req.body.Name,
-      Surname: req.body.Surname,
-      Pass: hash,
-      Avatar: photo,
-    };
-
+    
     await User.findOneAndUpdate(filter, update, {});
     res.status(200).json({
       msg: "Dane zostały zaktualizowane",

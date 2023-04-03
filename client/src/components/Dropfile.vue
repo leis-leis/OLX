@@ -1,7 +1,7 @@
 <script>
-import { useFileStore } from '../stores/files';
+import { useFileStore } from "../stores/files";
 
-export default {  
+export default {
   data() {
     return {
       isDragging: false,
@@ -11,8 +11,13 @@ export default {
   methods: {
     onChange() {
       this.files = [...this.$refs.file.files];
+      if (this.files[0].size > 8800000) {
+        alert("Plik jest zbyt duży!");
+        this.value = "";
+      }else{
       const store = useFileStore();
-      store.addFiles(this.files)
+      store.addFiles(this.files);
+    }
     },
     dragover(e) {
       e.preventDefault();
@@ -47,6 +52,12 @@ export default {
     },
   },
 };
+// function onSelect(e) {
+//     if (e.files.length > 4) {
+//         alert("Tylko 1 plik!");
+//         e.preventDefault();
+//     }
+// }
 </script>
 
 <template>
@@ -59,7 +70,7 @@ export default {
     >
       <input
         type="file"
-        single
+        multiple
         name="file"
         id="fileInput"
         class="hidden-input"
@@ -103,9 +114,8 @@ export default {
   display: flex;
   flex-grow: 1;
   align-items: center;
-  justify-content: center;
+  justify-content: left;
   text-align: center;
-  margin-top: 5%;
 }
 
 .dropzone-container {

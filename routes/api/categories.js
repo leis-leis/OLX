@@ -55,6 +55,7 @@ router.post(
         session: false,
     }),
     async (req, res) => {
+        console.log(req.body)
         const categoryToDel = await Category.findOne({
             _id:req.body.Id
         })

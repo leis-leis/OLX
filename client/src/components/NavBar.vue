@@ -1,6 +1,5 @@
 <script setup>
 import { useUserStore } from "../stores/user";
-import {ref} from "vue";
 
 const userStore = useUserStore();
 
@@ -50,4 +49,6 @@ const logout = () => {
   </nav>
 </template>
 
-<style></style>
+<style>
+
+</style>

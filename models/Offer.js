@@ -30,3 +30,5 @@ var OfferSchema = mongoose.Schema({
 var Offer = mongoose.model("Offer", OfferSchema);
 
 module.exports = Offer;
+
+

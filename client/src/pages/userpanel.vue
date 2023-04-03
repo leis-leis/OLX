@@ -43,6 +43,9 @@ onMounted(async () => {
     <br>
     <br>
     <router-link class="buttonsidebar" to="/useroffer" tag="button">Twoje ogłoszenia</router-link>
+    <br>
+    <br>
+        <router-link class="buttonsidebar" to="/useraddoffer" tag="button">Dodaj ogłoszenie</router-link>
   </div>
 </div>
   <div>
@@ -110,4 +113,19 @@ onMounted(async () => {
               text-align: center;
               max-width: 5.5em;
 }
+
+.buttonsidebar{
+    padding: 10px;
+    margin-top: 20px;
+    width: 100px;
+    height: 50px;
+    background-color: #3F51B5;
+    color: #fff;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+    text-decoration: none;
+    text-align: center;
+  }
+  
 </style>

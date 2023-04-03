@@ -2,27 +2,20 @@
 import axios from "axios";
 import { onMounted } from "vue";
 import { ref } from "vue";
+import { useRouter, useRoute } from 'vue-router'
 
+const router = useRouter();
+const route = useRoute();
 
 const offers = ref("");
 
-async function del(offerid){
-  const res = await axios.delete("http://localhost:3000/api/offers/offerdelete/" + offerid, {
-    headers: {
-      Authorization: localStorage.getItem("token"),
-    },
-  });
-  console.log(res.msg)
-}
-
 onMounted(async () => {
-  const res = await axios.get("http://localhost:3000/api/offers/myoffers", {
-    headers: {
-      Authorization: localStorage.getItem("token"),
-    },
-  });
-  offers.value = res.data.offers
-
+    const res = await axios.get("http://localhost:3000/api/offers/offers", {
+        headers: {
+            Authorization: localStorage.getItem("token"),
+        },
+    });
+    offers.value = res.data.offers
 });
 
 </script>
@@ -49,15 +42,12 @@ onMounted(async () => {
       <router-link class="buttonsidebar" to="/useraddoffer" tag="button">Dodaj ogłoszenie</router-link>
     </div>
   </div>
-  <h1>TWOJE OGŁOSZENIA</h1>
+  <h1>WSZYSTKIE OGŁOSZENIA</h1>
   <div class="button-container">
-    <div class="buttonik">
-      <router-link class="buttonik" to="/useraddoffer" tag="button">Dodaj ogłoszenie <i
-          class="fa fa-plus fa-1x"></i></router-link>
-    </div>
   </div>
-    <router-link class="panel" v-for="offer in offers" :to="{name: `offer`, params: {id: offer._id }}">
-    <div class="panelelements" @click="consolelog">
+  <div class="panel" v-for="offer in offers">
+    <router-link :to="{name: `offer`, params: {id: offer._id }}">
+    <div class="panelelements">
       <div>
         <img class="foto" :src="'/src/assets/uploads/' + offer.Photos[0]" alt="zdjecie">
       </div>
@@ -67,17 +57,11 @@ onMounted(async () => {
       </div>
       <div>
         <p class="cena">{{ offer.Price }}</p>
-        <div class="buttoniks">
-        <router-link class="buttoniks" :to="{name: `editoffer`, params: {id: offer._id }}" tag="button">Edytuj ogłoszenie <i
-            class="fa fa-pencil fa-1x"></i></router-link>
-          <router-link to="useroffer"   class="buttoniks" tag="button"><span @click="del(offer._id)">Usuń ogłoszenie <i
-              class="fa fa-minus fa-1x"></i></span> </router-link>
-
-        </div>
       </div>
       </div>
     </router-link>
-  
+    </div>
+    
 </template>
 
 <style scoped>
@@ -193,7 +177,6 @@ h3 {
   cursor: pointer;
   font-family: Exo;
   text-decoration: none;
-  border: none;
 }
 
 

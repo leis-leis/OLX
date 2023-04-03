@@ -8,6 +8,10 @@ import UserModify from "./pages/usermodify.vue";
 import AdminPanel from "./pages/adminpanel.vue";
 import adminpanelusers from "./pages/adminpanelusers.vue";
 import useroffer from "./pages/useroffer.vue";
+import useraddoffer from "./pages/useraddoffer.vue";
+import usereditoffer from "./pages/usereditoffer.vue";
+import offer from "./pages/offer.vue";
+import offers from "./pages/alloffers.vue";
 
 const routes = [
   {
@@ -45,6 +49,25 @@ const routes = [
   {
     path: "/useroffer",
     component: useroffer,
+  },
+  {
+    path: "/useraddoffer",
+    component: useraddoffer,
+  },
+  {
+    name: "editoffer",
+    path: "/editoffer/:id",
+    component: usereditoffer,
+  },
+  {
+    name: "offer",
+    path: "/offer/:id",
+    component: offer,
+  },
+  {
+    name: "offers",
+    path: "/offers",
+    component: offers,
   }
 ];
 

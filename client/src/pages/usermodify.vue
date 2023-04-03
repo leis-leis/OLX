@@ -122,8 +122,9 @@ import Dropfile from "@/components/Dropfile.vue";
                 v-model="confirm_password"
               />
             </div>
+            <br>
             <Dropfile />
-            <br />
+            <br>
           </form>
           <button class="button" @click="check">ZAPISZ</button>
         </div>
