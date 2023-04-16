@@ -97,7 +97,7 @@ export default {
 
   <div
     class="offcanvas offcanvas-end"
-    style="background-color: #3f51b5; color: #fff; width: 20vh"
+    style="background-color: #3f51b5; color: #fff;"
     data-bs-scroll="true"
     data-bs-backdrop="false"
     tabindex="-1"

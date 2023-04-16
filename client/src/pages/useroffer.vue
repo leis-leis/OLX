@@ -7,7 +7,7 @@ import Time from "@/components/Time.vue";
 
 const offers = ref("");
 
-async function del(offerid){
+async function del(offerid) {
   const res = await axios.delete("http://localhost:3000/api/offers/offerdelete/" + offerid, {
     headers: {
       Authorization: localStorage.getItem("token"),
@@ -35,14 +35,13 @@ onMounted(async () => {
     <i class="fa fa-bars"></i>
   </button>
 
-  <div class="offcanvas offcanvas-end" style="background-color: #3f51b5; color: #fff; width: 20vh;"
-    data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1" id="offcanvasScrolling"
-    aria-labelledby="offcanvasScrollingLabel">
+  <div class="offcanvas offcanvas-end" style="background-color: #3f51b5; color: #fff;" data-bs-scroll="true"
+    data-bs-backdrop="false" tabindex="-1" id="offcanvasScrolling" aria-labelledby="offcanvasScrollingLabel">
     <div class="offcanvas-header">
-            <h5 class="offcanvas-title" id="offcanvasScrollingLabel" >
+      <h5 class="offcanvas-title" id="offcanvasScrollingLabel">
         {{ email }}
       </h5>
-      <Time/>
+      <Time />
       <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
     </div>
     <div class="offcanvas-body">
@@ -62,7 +61,7 @@ onMounted(async () => {
           class="fa fa-plus fa-1x"></i></router-link>
     </div>
   </div>
-    <router-link class="panel" v-for="offer in offers" :to="{name: `offer`, params: {id: offer._id }}">
+  <router-link class="panel" v-for="offer in offers" :to="{ name: `offer`, params: { id: offer._id } }">
     <div class="panelelements" @click="consolelog">
       <div>
         <img class="foto" :src="'/src/assets/uploads/' + offer.Photos[0]" alt="zdjecie">
@@ -74,20 +73,18 @@ onMounted(async () => {
       <div>
         <p class="cena">{{ offer.Price }}</p>
         <div class="buttoniks">
-        <router-link class="buttoniks" :to="{name: `editoffer`, params: {id: offer._id }}" tag="button">Edytuj ogłoszenie <i
-            class="fa fa-pencil fa-1x"></i></router-link>
-          <router-link to="useroffer"   class="buttoniks" tag="button"><span @click="del(offer._id)">Usuń ogłoszenie <i
-              class="fa fa-minus fa-1x"></i></span> </router-link>
+          <router-link class="buttoniks" :to="{ name: `editoffer`, params: { id: offer._id } }" tag="button">Edytuj
+            ogłoszenie <i class="fa fa-pencil fa-1x"></i></router-link>
+          <router-link to="useroffer" class="buttoniks" tag="button"><span @click="del(offer._id)">Usuń ogłoszenie <i
+                class="fa fa-minus fa-1x"></i></span> </router-link>
 
         </div>
       </div>
-      </div>
-    </router-link>
-  
+    </div>
+  </router-link>
 </template>
 
 <style scoped>
-
 .button-container {
   display: relative;
   justify-content: space-evenly;
@@ -148,7 +145,7 @@ h3 {
   text-decoration: none;
 }
 
-.panel:hover{
+.panel:hover {
   background-color: #303F9F;
 }
 
@@ -201,6 +198,4 @@ h3 {
   text-decoration: none;
   border: none;
 }
-
-
 </style>

@@ -1,17 +1,15 @@
+<script setup>
+import axios from "axios";
+import { ref } from "vue";
+import { useRouter, useRoute } from 'vue-router'
+
+const searchParam = ref("");
+
+</script>
+
 <template>
     <div class="search">
-    <input type="text" v-model="input" placeholder="" style="margin-top: 35px;">
-    <select name="category" id="category">
-    <option value="Kategorie">Kategorie</option>
-    <option value="Motoryzacja">Motoryzacja</option>
-    <option value="Nieruchomości">Nieruchomości</option>
-    <option value="Antyki">Antyki</option>
-    <option value="Elektronika">Elektronika</option>
-    <option value="Zwierzęta">Zwierzęta</option>
-    <option value="Sport i Hobby">Sport i Hobby</option>
-    <option value="Dla dzieci">Dla dzieci</option>
-    <option value="Muzyka i edukacja">Muzyka i edukacja</option>
-    </select>
+    <input type="text" v-model="searchParam" placeholder="" style="margin-top: 35px;">
     <select name="Lokalizacja" id="lokalizacja">
     <option value="Lokalizacja">Lokalizacja</option>
     <option value="dolnoslaskie">Dolnośląskie</option>
@@ -31,17 +29,10 @@
     <option value="wielkopolskie">Wielkopolskie</option>
     <option value="zachodniopomorskie">Zachodniopomorskie</option>
     </select>
-    <button style='font-size:16px'>Szukaj</button>
+    <router-link class="buttoniks" :to="{name: `foundoffers`, params: {searchParam: searchParam }}" tag="button">Szukaj</router-link>
     </div>
 </template>
-  
-  <script>
-  export default {
-  
-  }
-  
-  </script>
-  
+    
   <style>
 
 .search{

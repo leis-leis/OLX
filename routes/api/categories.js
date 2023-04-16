@@ -32,7 +32,7 @@ router.post(
         
         var newCategory
 
-        if(MainCategory == '-1'){
+        if(MainCategory == '0'){
             newCategory = new Category({
                 Name
             })

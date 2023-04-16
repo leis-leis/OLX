@@ -12,6 +12,7 @@ import useraddoffer from "./pages/useraddoffer.vue";
 import usereditoffer from "./pages/usereditoffer.vue";
 import offer from "./pages/offer.vue";
 import offers from "./pages/alloffers.vue";
+import foundoffers from "./pages/foundoffers.vue";
 
 const routes = [
   {
@@ -68,6 +69,11 @@ const routes = [
     name: "offers",
     path: "/offers",
     component: offers,
+  },
+  {
+    name: "foundoffers",
+    path: "/foundoffers/:searchParam?/:sortBy?/:order?",
+    component: foundoffers,
   }
 ];
 

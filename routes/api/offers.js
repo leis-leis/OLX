@@ -176,4 +176,45 @@ router.get(
   }
 )
 
+router.get(
+  "/foundoffers/:searchParam?/:sortBy?/:order?",
+  async (req, res) => {
+    var offers
+    let regex
+
+    if(req.params.searchParam){
+      let s = req.params.searchParam
+      regex = new RegExp(s, 'i') // "i" opcja na case insensitive
+    }
+    
+    let sortBy
+    let order
+    if(req.params.sortBy){
+      sortBy = req.params.sortBy
+      order = req.params.order
+    }
+
+    if(regex && sortBy){
+      var sort = {};
+      sort[sortBy] = order
+      offers = await Offer.find({
+        "Name" : { "$regex": regex } 
+      }).sort(sort)
+      console.log(regex + ", " + sortBy + ", " + order)
+      console.log(offers)
+    }else if(regex){
+      offers = await Offer.find({
+        "Name" : { "$regex": regex } 
+      })
+    }else if(sortBy){ // tu sie wywali bo cos mu nie pasuje gdy chcemy sortować bez parametru
+      offers = await Offer.find({}).sort({sortBy: order})
+    }else{
+      offers = await Offer.find({})
+    }
+    return res.json({
+       offers: offers,
+    });
+  }
+)
+
 module.exports = router;

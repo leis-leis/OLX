@@ -118,7 +118,7 @@ function del() {
       <br />
       <div class="kategoriedel">
         Usuń Kategorie
-        <select @change="handleHange($event)" name="mainCat" id="mainCategory">
+        <select @change="handleHange($event)" v-model="mainCat" name="mainCat" id="mainCategory">
           <option  v-for="cat in mainCategory" :key="cat._id" :value="cat._id">
             {{ cat.Name }}
           </option>
