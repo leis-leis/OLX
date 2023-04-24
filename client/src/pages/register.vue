@@ -113,9 +113,9 @@ const register = () => {
             </div>
             <br />
             <button class="submit">CAPTHA</button><br /><br />
-            <button class="btn btn-primary" @click="register">
+            <router-link to="/"  class="btn btn-primary" @click="register">
               ZAREJESTRUJ
-            </button>
+            </router-link>
             &nbsp;&nbsp;&nbsp;&nbsp;
             <br>
             <br>

@@ -9,6 +9,8 @@ const path = require("path");
 const Offer = require("../../models/Offer");
 const User = require("../../models/User");
 const Category = require("../../models/Category");
+const VoivodeshipList = require("../../models/VoivodeshipList");
+const Address = require("../../models/Address");
 
 var fileName;
 const storage = multer.diskStorage({
@@ -33,7 +35,33 @@ router.get(
     })
 
     return res.json({
-       categories: categories
+       categories: categories,
+    });
+    
+  }
+)
+
+router.get(
+  "/addresses/:search?",
+  async (req, res) => {
+    let regex
+
+    if(req.params.search){
+      let s = "^" + req.params.search
+      regex = new RegExp(s, 'i') // "i" opcja na case insensitive
+    }
+    var address
+    if(regex){
+      address = await Address.find({
+      "City" : { "$regex": regex }
+    }) 
+    }else{
+      address = await Address.find({
+    })
+    }
+
+    return res.json({
+       addresses: address
     });
     
   }
@@ -55,7 +83,9 @@ router.post(
                 photo.push(element.filename)
             })
         }
-        
+
+        const address = await Address.findOne({City: req.body.City, County: req.body.County, Voivodeship: req.body.Voivodeship})
+        //console.log(address)
         const newOffer = new Offer({
             Name: req.body.Name,
             Price: req.body.Price,
@@ -63,6 +93,7 @@ router.post(
             Photos: photo,
             User: req.user._id,
             Category: req.body.Cat,
+            Address: address._id
         })
 
         const saved = await newOffer.save();
@@ -98,15 +129,21 @@ router.get(
     const offer = await Offer.findOne({
       _id: req.params.id
     })
-    const categories = await Category.find({})
+    const categories = await Category.find({
+      Deleted: false
+    })
     const offerer = await User.findOne({
       _id: offer.User
+    })
+    const address = await Address.findOne({
+      _id: offer.Address
     })
 
     return res.json({
        offer: offer,
        offerer: offerer,
-       categories: categories
+       categories: categories,
+       address: address
     });
     
   }
@@ -120,6 +157,11 @@ router.post(
   uploads.none(),
   async (req, res) => {
     const filter = { _id: req.params.id };
+    const address = await Address.findOne({
+      City: req.body.City,
+      County: req.body.County,
+      Voivodeship: req.body.Voivodeship
+    })
 
     var update;
     if (req.files?.path == undefined) {
@@ -127,6 +169,8 @@ router.post(
         Name: req.body.Name,
         Price: req.body.Price,
         Description: req.body.Desc,
+        Category: req.body.Category,
+        Address: address._id
       };
     } else {
       let photo = [];
@@ -137,7 +181,9 @@ router.post(
         Name: req.body.Name,
         Price: req.body.Price,
         Description: req.body.Desc,
+        Category: req.body.Category,
         Photos: photo,
+        Address: address._id
       };
     }
     uploads.any("Files")

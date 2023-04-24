@@ -7,6 +7,7 @@ import { useUserStore } from "../stores/user";
 import { VueperSlides, VueperSlide } from "vueperslides";
 import "vueperslides/dist/vueperslides.css";
 import Time from "@/components/Time.vue";
+import router from "@/router";
 
 const route = useRoute();
 
@@ -14,6 +15,7 @@ const userStore = useUserStore();
 
 const offer = ref("");
 const offerer = ref("");
+const address = ref("")
 
 onMounted(async () => {
   const res = await axios.get(
@@ -24,12 +26,18 @@ onMounted(async () => {
       },
     }
   );
+  address.value = res.data.address
   offer.value = res.data.offer;
+  offer.value.Date = offer.value.Date.substring(0,10) + " o godzinie: " + offer.value.Date.substring(11,19)
   offerer.value = res.data.offerer;
   // do zmiany kozioł canot see that shit
   const x = document.querySelector(".vueperslides__parallax-wrapper");
   x.style.paddingBottom = "100%";
 });
+
+function report(){
+  router.push({name: "reportOffer", params: {id: route.params.id}})
+}
 </script>
 
 <template>
@@ -80,17 +88,26 @@ onMounted(async () => {
         <h3>{{ offer.Name }}</h3>
       </div>
     </div>
-    <p class="cena">{{ offer.Price }}</p>
+    <p class="cena">{{ offer.Price }} zł</p>
     <br />
   </div>
   <div class="panel">
     <p class="p">Opis: {{ offer.Description }}</p>
+    
+  </div>
+  <div class="panel">
+    <p class="p">Adres: {{ address.City }}, {{ address.County }}, {{ address.Voivodeship }}</p>
     <div class="data">
       Wystawił {{ offerer.Name }}
       <br />
-      Data wystawienia ogłoszenia{{ offer.Date }}
+      Data wystawienia ogłoszenia
+      <p>{{ offer.Date }}</p>
+      <div v-if="userStore.isLoggedIn">
+        <button @click="report">Zgłoś ogłoszenie</button>
+      </div>
     </div>
   </div>
+
 </template>
 <style scoped>
 .panel {
@@ -101,6 +118,7 @@ onMounted(async () => {
   height: 90%;
   background-color: #3f51b5;
   border-radius: 10px;
+  color: white;
 }
 
 .panelelements {

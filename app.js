@@ -40,6 +40,9 @@ mongoose
     console.log(`COULDN'T CONNECT TO DATABASE ${err}`);
   });
 
+const reports = require("./routes/api/reports");
+app.use("/api/reports", reports);
+
 const users = require("./routes/api/users");
 app.use("/api/users", users);
 
@@ -48,6 +51,8 @@ app.use("/api/categories", categories);
 
 const offers = require("./routes/api/offers");
 app.use("/api/offers", offers);
+
+
 
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);

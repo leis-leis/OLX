@@ -1,3 +1,28 @@
+<script setup>
+import axios from "axios";
+import { onMounted, ref } from "vue";
+import { useRouter, useRoute } from 'vue-router'
+
+const categories = ref("")
+const mainCategory = ref("")
+
+onMounted(async () => {
+  const res = await axios.get("http://localhost:3000/api/categories/categories", {
+    headers: {
+      Authorization: localStorage.getItem("token"),
+    },
+  });
+  categories.value = res.data.categories
+
+  mainCategory.value = categories.value.filter(c => c.MainCategory == null);
+  mainCategory.value.forEach(c => {
+    c.SubCategory = categories.value.filter(cc => cc.MainCategory === c._id)
+    //console.log(c.SubCategory)
+  })
+  //console.log(mainCategory.value)
+});
+</script>
+
 <template>
   <SearchBar />
   <link
@@ -6,56 +31,26 @@
     integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU"
     crossorigin="anonymous"
   />
+  
   <h1>Kategorie główne</h1>
+  <div>
+  <router-link class="buttonsidebar" to="/offers" tag="button">Ostatnio Dodane</router-link>
+</div>
+
+
   <div class="button-container">
     <div class="row">
-      <div class="col-sm">
-        <button class="button"><i class="fa fa-car fa-4x"></i></button>
-        <div class="text">Motoryzacja</div>
-      </div>
-      <div class="col-sm">
-        <button class="button"><i class="fa fa-key fa-4x"></i></button>
-        <div class="text">Nieruchomości</div>
-      </div>
-      <div class="col-sm">
-        <button class="button"><i class="fa fa-briefcase fa-4x"></i></button>
-        <div class="text">Antyki</div>
-      </div>
-      <div class="col-sm">
-        <button class="button"><i class="fa fa-home fa-4x"></i></button>
-        <div class="text">Dom i Ogród</div>
-      </div>
-      <div class="col-sm">
-        <button class="button"><i class="fa fa-mobile fa-4x"></i></button>
-        <div class="text">Elektronika</div>
-      </div>
-    </div>
-  </div>
-  <br />
-  <div class="button-container">
-    <div class="row">
-      <div class="col-sm">
-        <button class="button"><i class="fas fa-dog fa-4x"></i></button>
-        <div class="text">Zwierzęta</div>
-      </div>
-      <div class="col-sm">
-        <button class="button"><i class="fa fa-futbol fa-4x"></i></button>
-        <div class="text">Sport i Hobby</div>
-      </div>
-      <div class="col-sm">
-        <button class="button"><i class="fa fa-child fa-4x"></i></button>
-        <div class="text">Dla dzieci</div>
-      </div>
-      <div class="col-sm">
-        <button class="button"><i class="fa fa-music fa-4x"></i></button>
-        <div class="text">Muzyka i edukacja</div>
+      <div v-for="cat in mainCategory" class="col-sm">
+        <button class="btn-94"><i :class="`fa ` + cat.Icon + ` fa-3x`"></i></button>
+        <div class="text">{{ cat.Name }}</div>
+        <ul>
+          <li v-for="subCat in cat.SubCategory">{{ subCat.Name }}</li>
+        </ul>
       </div>
     </div>
   </div>
   
-<div class="">
-  <router-link to="/offers">Ostatnio Dodane</router-link>
-</div>
+
 </template>
 
 
@@ -101,4 +96,78 @@ h1 {
   font-family: Exo;
   font-size: px;
 }
+
+.buttonsidebar {
+  width: 8%;
+  margin: auto;
+  display: flex;
+  background-color: #3F51B5;
+  color: #fff;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  text-decoration: none;
+  text-align: center;
+  margin-top: -30px;
+  margin-bottom: 2%;
+}
+
+.buttonsidebar:hover {
+  background-color: #FF5722;
+}
+
+.btn-94:before {
+  border: 0 solid;
+  box-sizing: border-box;
+}
+.btn-94 {
+  -webkit-tap-highlight-color: transparent;
+  background-color: #000;
+  background-image: none;
+  color: #fff;
+}
+.btn-94:disabled {
+  cursor: default;
+}
+.btn-94:-moz-focusring {
+  outline: auto;
+}
+
+.btn-94 [hidden] {
+  display: none;
+}
+.btn-94 {
+  background: #3F51B5;
+  background-clip: content-box;
+  border: 5px solid;
+  border-radius: 50%;
+  box-sizing: border-box;
+  display: block;
+  height: 100px;
+  padding: 0;
+  position: relative;
+  transition: 0.2s;
+  width: 100px;
+}
+
+.btn-94:hover {
+  --size: 70px;
+  border: 10px solid transparent;
+  background-color: #FF5722;
+}
+
+.button-container ul {
+    display: none;
+    position: absolute;
+    padding: 10px;
+    z-index: 1;
+  }
+  
+  .button-container li:hover {
+    background-color: #FF5722;
+  }
+  
+  .col-sm:hover ul {
+    display: block;
+  }
 </style>

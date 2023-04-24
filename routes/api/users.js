@@ -127,6 +127,36 @@ router.get(
   }
 );
 
+router.get(
+  "/adminpanelusers",
+  passport.authenticate("jwt", {
+    session: false,
+  }),
+  async(req, res) => {
+    const users = await User.find({
+      }).sort({IsAdmin: 'desc'})
+      console.log(users);
+      return res.json({
+        users: users,
+      });
+    })
+
+router.post(
+  "/adminpanelusers",
+  passport.authenticate("jwt", {
+    session: false,
+  }),
+  async (req, res) => {
+    const filter = { _id: req.body.id };
+    var update = {Blocked:req.body.blokt};
+    console.log(update, filter);
+    await User.findOneAndUpdate(filter, update, {});
+    res.status(200).json({
+      msg: "success",
+    });
+  }
+);
+
 var fileName;
 const storage = multer.diskStorage({
   destination: "./client/src/assets/uploads",

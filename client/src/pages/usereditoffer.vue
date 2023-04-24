@@ -18,6 +18,7 @@ const categoryOffer = ref("");
 const addressOffer = ref("");
 
 const offer = ref("")
+const addresses = ref("")
 
 const categories = ref([]);
 const mainCategory = ref([]);
@@ -25,16 +26,21 @@ const subCategory = ref([]);
 const SubCatID = ref("");
 
 function onpost() {
+    const words = addressOffer.value.split(', ')
     const files = fileStore.files;
     const formData = new FormData();
     formData.append("Name", nameOffer.value)
     formData.append("Price", priceOffer.value)
     formData.append("Description", descriptionOffer.value)
+    formData.append("Category", categoryOffer.value)
+    formData.append("City", words[0])
+    formData.append("County", words[1])
+    formData.append("Voivodeship", words[2])
     files.forEach((file) => {
         formData.append("Files", file);
     });
     
-    formData.forEach((val , key , formData)  => {console.log(key + ": " + val)})
+    //formData.forEach((val , key , formData)  => {console.log(key + ": " + val)})
 
     const posto = axios.post(
     "http://localhost:3000/api/offers/offeredit/" + route.params.id,
@@ -56,10 +62,13 @@ onMounted(async () => {
   offer.value = res.data.offer
 
   categories.value = res.data.categories
-  
+
   nameOffer.value = offer.value.Name
   priceOffer.value = offer.value.Price
   descriptionOffer.value = offer.value.Description
+  categoryOffer.value = offer.value.Category
+  //console.log(res.data.address)
+  addressOffer.value = res.data.address.City + ', ' + res.data.address.County + ', ' + res.data.address.Voivodeship
   //photosOffer.value = offer.value.Photos  //tu nie wiem jak dac zdjecia 
 
 
@@ -68,11 +77,23 @@ onMounted(async () => {
     c.SubCategory = categories.value.filter(cc => cc.MainCategory === c._id)
     //console.log(c.SubCategory)
   })
+  //console.log(mainCategory.value)
 });
 
 const handleHange = (event) => {
   subCategory.value = mainCategory.value.find(c => c._id === event.target.value).SubCategory
   console.log(subCategory.value)
+}
+
+async function showAddress(){
+  if(addressOffer.value.length > 2){
+    const res = await axios.get("http://localhost:3000/api/offers/addresses/" + addressOffer.value, {
+    headers: {
+      Authorization: localStorage.getItem("token"),
+    },
+  });
+  addresses.value = res.data.addresses;
+  }
 }
 
 </script>
@@ -131,7 +152,7 @@ import Dropfile from "@/components/Dropfile.vue";
         <div class="title">
             Kategoria
             <div class="form-group">
-                <select @change="handleHange($event)" name="mainCat" id="mainCategory">
+                <!-- <select @change="handleHange($event)" name="mainCat" id="mainCategory">
           <option  v-for="cat in mainCategory" :key="cat._id" :value="cat._id">
             {{ cat.Name }}
           </option>
@@ -140,6 +161,12 @@ import Dropfile from "@/components/Dropfile.vue";
           <option  v-for="cat in subCategory" :key="cat._id" :value="cat._id">
             {{ cat.Name }}
           </option>
+        </select> -->
+
+        <select v-model="categoryOffer" name="" id="">
+          <optgroup v-for="cat in mainCategory" v-bind:label="cat.Name">
+            <option v-for="subCat in cat.SubCategory" :value="subCat._id">{{ subCat.Name }}</option>
+          </optgroup>
         </select>
             </div>
         </div>
@@ -159,35 +186,31 @@ import Dropfile from "@/components/Dropfile.vue";
     </div>
 
     <div class="panelik">
-        <div class="title">
-            Lokalizacja
-        </div>
-        <div class="form-group">
-            <input id="name" type="text" placeholder="Miejscowość" name="Name" v-model="name" class="form-control"
-                style="margin-left: 10px;" />
-        </div>
+      <div class="title">Lokalizacja</div>
+    <div class="form-group">
+      <input
+        id="name"
+        type="text"
+        autocomplete="address-level2"
+        enterkeyhint="next"
+        placeholder="Miejscowość"
+        name="address-level2"
+        v-model="addressOffer"
+        list="addresses"
+        class="form-control"
+        style="margin-left: 10px"
+        @keyup="showAddress"
+      />
+      <datalist
+      id="addresses"
+      >
+      <option v-for="address in addresses" :value="address.City + `, ` + address.County + `, ` + address.Voivodeship"></option>
+      </datalist>
+    </div>
     </div>
 
-    <div class="panel">
-        <div class="title">
-            Dane Kontaktowe
-        </div>
-        <div class="form card-body">
-            <form>
-                <div class="form-group">
-                    <input id="name" type="text" placeholder="Adres E-mail" name="Name"
-                        v-model="name" class="form-control" />
-                </div>
-                <br>
-                <div class="form-group">
-                    <input id="name" type="text" placeholder="Numer Telefonu" name="Name"
-                        v-model="name" class="form-control" />
-                </div>
-            </form>
-        </div>
-    </div>
     <div class="paneladd">
-        <button class="button" @click="onpost">Dodaj Ogłoszenie</button>
+        <button class="button" @click="onpost">Edytuj Ogłoszenie</button>
         </div>
 
 </template>

@@ -71,7 +71,7 @@ onMounted(async () => {
         <p class="p">{{ offer.Description }}</p>
       </div>
       <div>
-        <p class="cena">{{ offer.Price }}</p>
+        <p class="cena">{{ offer.Price }} zl</p>
         <div class="buttoniks">
           <router-link class="buttoniks" :to="{ name: `editoffer`, params: { id: offer._id } }" tag="button">Edytuj
             ogłoszenie <i class="fa fa-pencil fa-1x"></i></router-link>

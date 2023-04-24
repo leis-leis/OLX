@@ -87,46 +87,55 @@ const Categories = [
     Name: "Motoryzacja",
     Deleted: false,
     MainCategory: null,
+    Icon: "fa-car"
   },
   {
     Name: "Nieruchomości",
     Deleted: false,
     MainCategory: null,
+    Icon: "fa-key"
   },
   {
     Name: "Antyki",
     Deleted: false,
     MainCategory: null,
+    Icon: "fa-briefcase"
   },
   {
     Name: "Dom i Ogród",
     Deleted: false,
     MainCategory: null,
+    Icon: "fa-home"
   },
   {
     Name: "Elektronika",
     Deleted: false,
     MainCategory: null,
+    Icon: "fa-mobile"
   },
   {
     Name: "Zwierzeta",
     Deleted: false,
     MainCategory: null,
+    Icon: "fa-dog"
   },
   {
     Name: "Sport i Hobby",
     Deleted: false,
     MainCategory: null,
+    Icon: "fa-futbol"
   },
   {
     Name: "Dla dzieci",
     Deleted: false,
     MainCategory: null,
+    Icon: "fa-child"
   },
   {
     Name: "Muzyka",
     Deleted: false,
     MainCategory: null,
+    Icon: "fa-music"
   },
 ];
 
@@ -136,15 +145,15 @@ async function main()
     const db = mongoose.connection.client.db("OLX"); //nazwa bazy jak macie inną
 
     //   Get all collections
-    const collections = await db.listCollections().toArray();
-    console.log(collections)
+    //const collections = await db.listCollections().toArray();
+    //console.log(collections)
 
     //   Create an array of collection names and drop each collection
-    collections
-      .map((collection) => collection.name)
-      .forEach(async (collectionName) => {
-        db.dropCollection(collectionName);
-      });
+    //collections
+    //  .map((collection) => collection.name)
+    //  .forEach(async (collectionName) => {
+    //    db.dropCollection(collectionName);
+    //  });
 
   /* insert data */
   Voivodeship.create(Voivodeships)

@@ -13,6 +13,7 @@ import usereditoffer from "./pages/usereditoffer.vue";
 import offer from "./pages/offer.vue";
 import offers from "./pages/alloffers.vue";
 import foundoffers from "./pages/foundoffers.vue";
+import reportoffer from "./pages/reportoffer.vue";
 
 const routes = [
   {
@@ -44,7 +45,8 @@ const routes = [
     component: AdminPanel,
   },
   {
-    path: "/adminpanelusers",
+    name: "adminpanelusers",
+    path: "/adminpanelusers/:searchParam?/:sortBy?/:order?", //tu moze jakos inaczej
     component: adminpanelusers,
   },
   {
@@ -72,8 +74,13 @@ const routes = [
   },
   {
     name: "foundoffers",
-    path: "/foundoffers/:searchParam?/:sortBy?/:order?",
+    path: "/foundoffers/:searchParam?/:sortBy?/:order?", //tu moze jakos inaczej
     component: foundoffers,
+  },
+  {
+    name: "reportOffer",
+    path: "/reportOffer/:id", //tu moze jakos inaczej
+    component: reportoffer,
   }
 ];
 

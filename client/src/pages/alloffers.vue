@@ -20,6 +20,8 @@ onMounted(async () => {
     
 });
 
+
+
 </script>
 
 <template>
@@ -49,6 +51,23 @@ onMounted(async () => {
     </div>
   </div>
   <h1>WSZYSTKIE OGŁOSZENIA</h1>
+  <select class="select" v-model="sortBy" @change="sort()" name="" id="">
+    <option value="priceDesc">Od Najdroższych</option>
+    <option value="priceAsc">Od Najtańszych</option>
+    <option value="dateAsc">Od Najstarszych</option>
+    <option value="dateDesc">Od Najnowszych</option>
+  </select>
+  <div style="display: flex; justify-content: center; padding: 15px;">
+  <div>
+    <label for="minPrice">Min Price:</label>
+    <input id="minPrice"  type="number" min="0">
+    
+    <label for="maxPrice">Max Price:</label>
+    <input id="maxPrice"  type="number" min="0">
+    
+    <button v-on:click="applyFilter">Apply</button>
+  </div>
+</div>
   <div class="button-container">
   </div>
     <router-link class="panel" v-for="offer in offers" :to="{name: `offer`, params: {id: offer._id }}">
@@ -58,10 +77,14 @@ onMounted(async () => {
       </div>
       <div>
         <h3>{{ offer.Name }}</h3>
+        
         <p class="p">{{ offer.Description }}</p>
       </div>
       <div>
-        <p class="cena">{{ offer.Price }}</p>
+        <p class="cena">{{ offer.Price }} zł</p>
+        <p style="color: #fff;">{{ offer.Date.substring(0,10) }}, {{ offer.Date.substring(11,19) }}
+        
+        </p>
       </div>
       </div>
     </router-link>
@@ -184,5 +207,9 @@ h3 {
   text-decoration: none;
 }
 
+.select {
+  display: flex;
+  margin: auto;
+}
 
 </style>

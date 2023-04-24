@@ -71,9 +71,11 @@ async function sort(){
 <template>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <button class="btn-primar" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasScrolling"
-    aria-controls="offcanvasScrolling"><i class="fa fa-bars"></i></button>
+    aria-controls="offcanvasScrolling" style="float: right;">
+    <i class="fa fa-bars"></i>
+  </button>
 
-  <div class="offcanvas offcanvas-start" style="background-color: #3F51B5; color:#fff; width: 200px;"
+  <div class="offcanvas offcanvas-end" style="background-color: #3F51B5; color:#fff; width: 200px;"
     data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1" id="offcanvasScrolling"
     aria-labelledby="offcanvasScrollingLabel">
     <div class="offcanvas-header">
@@ -91,12 +93,23 @@ async function sort(){
     </div>
   </div>
   <h1>Wyszukiwanie dla "{{ route.params.searchParam }}"</h1>
-  <select v-model="sortBy" @change="sort()" name="" id="">
+  <select class="select" v-model="sortBy" @change="sort()" name="" id="">
     <option value="priceDesc">Od Najdroższych</option>
     <option value="priceAsc">Od Najtańszych</option>
     <option value="dateAsc">Od Najstarszych</option>
     <option value="dateDesc">Od Najnowszych</option>
   </select>
+  <div style="display: flex; justify-content: center; padding: 15px;">
+  <div>
+    <label for="minPrice">Min Price:</label>
+    <input id="minPrice"  type="number" min="0">
+    
+    <label for="maxPrice">Max Price:</label>
+    <input id="maxPrice"  type="number" min="0">
+    
+    <button v-on:click="applyFilter">Apply</button>
+  </div>
+</div>
   <div class="button-container">
   </div>
     <router-link class="panel" v-for="offer in offers" :to="{name: `offer`, params: {id: offer._id }}">
@@ -109,7 +122,8 @@ async function sort(){
         <p class="p">{{ offer.Description }}</p>
       </div>
       <div>
-        <p class="cena">{{ offer.Price }}</p>
+        <p class="cena">{{ offer.Price }} zł</p>
+        <p style="color: #fff;">{{ offer.Date.substring(0,10) }}, {{ offer.Date.substring(11,19) }} </p>
       </div>
       </div>
     </router-link>
@@ -230,6 +244,16 @@ h3 {
   cursor: pointer;
   font-family: Exo;
   text-decoration: none;
+}
+
+.select {
+  display: flex;
+  margin: auto;
+}
+
+.pricefilter {
+  display: flex;
+  margin: auto;
 }
 
 

@@ -6,6 +6,19 @@ const passport = require("passport");
 const Category = require("../../models/Category");
 
 router.get(
+    "/categories",
+    async (req, res) => {
+        const categories = await Category.find({
+            Deleted:false
+        });
+        //console.log(categories)
+      return res.json({
+        categories: categories,
+      });
+    }
+)
+
+router.get(
     "/adminpanel",
     passport.authenticate("jwt", {
       session: false,

@@ -15,6 +15,9 @@ const photosOffer = ref("");
 const categoryOffer = ref("");
 const addressOffer = ref("");
 
+const addresses = ref("")
+const voivodeships = ref("")
+
 const categories = ref([]);
 
 const mainCategory = ref([]);
@@ -36,28 +39,45 @@ onMounted(async () => {
   });
 });
 
+async function showAddress(){
+  if(addressOffer.value.length > 2){
+    const res = await axios.get("http://localhost:3000/api/offers/addresses/" + addressOffer.value, {
+    headers: {
+      Authorization: localStorage.getItem("token"),
+    },
+  });
+  addresses.value = res.data.addresses;
+  //voivodeships.value = res.data.voivodeships;
+  //console.log(res.data.address)
+  }
+}
+
 const handleHange = (event) => {
   subCategory.value = mainCategory.value.find(
     (c) => c._id === event.target.value
   ).SubCategory;
-  console.log(subCategory.value);
+  //console.log(subCategory.value);
 };
 
 function onpost() {
+  const words = addressOffer.value.split(', ')
   const files = fileStore.files;
-  console.log(files[0]);
+  //console.log(files[0]);
   const formData = new FormData();
   formData.append("Name", nameOffer.value);
   formData.append("Price", priceOffer.value);
   formData.append("Description", descriptionOffer.value);
-  formData.append("Cat", SubCatID.value);
+  formData.append("Cat", categoryOffer.value);
+  formData.append("City", words[0])
+  formData.append("County", words[1])
+  formData.append("Voivodeship", words[2])
   files.forEach((file) => {
     formData.append("Files", file);
   });
 
-  formData.forEach((val, key, formData) => {
-    console.log(key + ": " + val);
-  });
+  // formData.forEach((val, key, formData) => {
+  //   console.log(key + ": " + val);
+  // });
 
   const posto = axios.post(
     "http://localhost:3000/api/offers/offeradd",
@@ -168,7 +188,7 @@ export default {
     <div class="title">
       <div>
         Kategoria
-        <select @change="handleHange($event)" name="mainCat" id="mainCategory">
+        <!-- <select @change="handleHange($event)" name="mainCat" id="mainCategory">
           <option v-for="cat in mainCategory" :key="cat._id" :value="cat._id">
             {{ cat.Name }}
           </option>
@@ -177,6 +197,11 @@ export default {
           <option v-for="cat in subCategory" :key="cat._id" :value="cat._id">
             {{ cat.Name }}
           </option>
+        </select> -->
+        <select v-model="categoryOffer" name="" id="">
+          <optgroup v-for="cat in mainCategory" v-bind:label="cat.Name">
+            <option v-for="subCat in cat.SubCategory" :value="subCat._id">{{ subCat.Name }}</option>
+          </optgroup>
         </select>
         <br />
       </div>
@@ -209,44 +234,20 @@ export default {
         enterkeyhint="next"
         placeholder="Miejscowość"
         name="address-level2"
-        v-model="address"
+        v-model="addressOffer"
+        list="addresses"
         class="form-control"
         style="margin-left: 10px"
+        @keyup="showAddress"
       />
+      <datalist
+      id="addresses"
+      >
+      <option v-for="address in addresses" :value="address.City + `, ` + address.County + `, ` + address.Voivodeship"></option>
+      </datalist>
     </div>
   </div>
 
-  <div class="panel">
-    <div class="title">Dane Kontaktowe</div>
-    <div class="form card-body">
-      <form>
-        <div class="form-group">
-          <input
-            id="name"
-            type="email"
-            enterkeyhint="next"
-            placeholder="Adres E-mail"
-            name="email"
-            v-model="email"
-            class="form-control"
-          />
-        </div>
-        <br />
-        <div class="form-group">
-          <input
-            id="name"
-            type="tel"
-            enterkeyhint="next"
-            pattern="[0-9]{3}-[0-9]{3}-[0-9]{3}"
-            placeholder="Nr telefonu"
-            name="tel"
-            v-model="tel"
-            class="form-control"
-          />
-        </div>
-      </form>
-    </div>
-  </div>
   <div class="paneladd">
     <button class="button" @click="onpost">Dodaj Ogłoszenie</button>
   </div>

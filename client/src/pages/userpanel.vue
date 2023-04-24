@@ -48,18 +48,18 @@ onMounted(async () => {
 
   <div
     class="offcanvas offcanvas-end"
-    style="background-color: #3f51b5; color: #fff; width:fit-content"
+    style="background-color: #3f51b5; color: #fff; width: fit-content"
     data-bs-scroll="true"
     data-bs-backdrop="false"
     tabindex="-1"
     id="offcanvasScrolling"
     aria-labelledby="offcanvasScrollingLabel"
   >
-    <div class="offcanvas-header" style="display: flex; flex-direction: column;">
-      <h5 class="offcanvas-title" id="offcanvasScrollingLabel" >
+    <div class="offcanvas-header" style="display: flex; flex-direction: column">
+      <h5 class="offcanvas-title" id="offcanvasScrollingLabel">
         {{ email }}
       </h5>
-      <Time/>
+      <Time />
       <button
         type="button"
         class="btn-close"

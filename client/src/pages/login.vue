@@ -51,7 +51,9 @@ const login = () => {
             </div>
             <br />
             <Captcha />
-            <button @click="login" type="submit" class="btn btn-primary">ZALOGUJ</button>
+            <router-link to="/"  class="btn btn-primary" @click="login">
+              ZALOGUJ
+            </router-link>
             <br>
             <br>
             <router-link to="/login" class="card-link tor"
